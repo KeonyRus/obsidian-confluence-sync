@@ -1,0 +1,15 @@
+.confluence-sync-pull-modal .setting-item {
+	border-top: none;
+}
+
+.confluence-sync-pull-modal .setting-item:first-child {
+	padding-top: 0;
+}
+
+.confluence-sync-pull-modal .mode-toggle {
+	margin-bottom: 12px;
+}
+
+.confluence-sync-status-bar {
+	cursor: pointer;
+}
