@@ -10,9 +10,9 @@ export interface ConfluenceSyncSettings {
 export const DEFAULT_SETTINGS: ConfluenceSyncSettings = {
 	baseUrl: "",
 	pat: "",
-	skipSsl: true,
+	skipSsl: false,
 	defaultSpaceKey: "",
-	syncFolder: "70-docs/confluence-rnd",
+	syncFolder: "confluence-pages",
 	pullAttachments: false,
 };
 

@@ -25,7 +25,7 @@ export class PullModal extends Modal {
 			.setName("Page URL or ID")
 			.setDesc("Confluence page URL, page ID, or page title")
 			.addText((text) => {
-				text.setPlaceholder("https://doc.office.lan/pages/viewpage.action?pageId=12345");
+				text.setPlaceholder("https://confluence.example.com/pages/viewpage.action?pageId=12345");
 				text.inputEl.style.width = "100%";
 				text.onChange((value) => {
 					this.input = value;

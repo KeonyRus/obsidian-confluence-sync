@@ -3,16 +3,19 @@
  * Removes/replaces characters that are invalid in file paths.
  */
 export function sanitizeFilename(name: string): string {
-	return name
+	const sanitized = name
+		.replace(/[\0]/g, "")
 		.replace(/[\\/:*?"<>|]/g, "_")
+		.replace(/^\.+/, "_")
 		.replace(/\s+/g, " ")
 		.trim();
+	return sanitized || "unnamed";
 }
 
 /**
  * Build the file path for a pulled Confluence page.
  *
- * @param syncFolder - Base sync folder (e.g., "70-docs/confluence-rnd")
+ * @param syncFolder - Base sync folder (e.g., "confluence-pages")
  * @param ancestors - Array of ancestor page titles (from root to parent)
  * @param title - The page title
  * @param hasChildren - Whether this page has children (determines folder creation)

@@ -18,10 +18,10 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Confluence Base URL")
-			.setDesc("Base URL of your Confluence instance (e.g., https://doc.office.lan)")
+			.setDesc("Base URL of your Confluence instance (e.g., https://confluence.example.com)")
 			.addText((text) =>
 				text
-					.setPlaceholder("https://doc.office.lan")
+					.setPlaceholder("https://confluence.example.com")
 					.setValue(this.plugin.settings.baseUrl)
 					.onChange(async (value) => {
 						this.plugin.settings.baseUrl = value.replace(/\/+$/, "");
@@ -77,10 +77,10 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Default Space Key")
-			.setDesc("Default Confluence space key (e.g., RND)")
+			.setDesc("Default Confluence space key (e.g., DEV, HR, ENG)")
 			.addText((text) =>
 				text
-					.setPlaceholder("RND")
+					.setPlaceholder("MYSPACE")
 					.setValue(this.plugin.settings.defaultSpaceKey)
 					.onChange(async (value) => {
 						this.plugin.settings.defaultSpaceKey = value;
@@ -93,7 +93,7 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 			.setDesc("Folder in vault where Confluence pages will be stored")
 			.addText((text) =>
 				text
-					.setPlaceholder("70-docs/confluence-rnd")
+					.setPlaceholder("confluence-pages")
 					.setValue(this.plugin.settings.syncFolder)
 					.onChange(async (value) => {
 						this.plugin.settings.syncFolder = value.replace(/\/+$/, "");

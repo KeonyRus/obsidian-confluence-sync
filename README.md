@@ -26,7 +26,7 @@ Read-only sync of **Confluence Server** pages into your Obsidian vault as Markdo
 3. Enter your Confluence Base URL (e.g., `https://confluence.example.com`)
 4. Enter your Personal Access Token (PAT)
 5. Click **Test Connection**
-6. Set the sync folder (default: `70-docs/confluence-rnd`)
+6. Set the sync folder (default: `confluence-pages`)
 
 ### SSL
 
@@ -51,7 +51,7 @@ Each synced file gets YAML frontmatter:
 ```yaml
 ---
 confluence-id: "12345678"
-confluence-space: "RND"
+confluence-space: "MYSPACE"
 confluence-version: 5
 confluence-title: "Page Title"
 confluence-url: "https://confluence.example.com/pages/viewpage.action?pageId=12345678"

@@ -73,9 +73,10 @@ export class ConfluenceClient {
 	}
 
 	async searchByTitle(title: string, spaceKey?: string): Promise<ConfluenceSearchResult> {
-		let cql = `title="${title}" AND type=page`;
+		const safeTitle = escapeCql(title);
+		let cql = `title="${safeTitle}" AND type=page`;
 		if (spaceKey) {
-			cql += ` AND space.key="${spaceKey}"`;
+			cql += ` AND space.key="${escapeCql(spaceKey)}"`;
 		}
 		const resp = await this.request("/content/search", { cql });
 		return resp.json as ConfluenceSearchResult;
@@ -97,4 +98,8 @@ export class ConfluenceClient {
 		});
 		return resp.arrayBuffer;
 	}
+}
+
+function escapeCql(value: string): string {
+	return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
 }
