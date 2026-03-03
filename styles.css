@@ -10,6 +10,10 @@
 	margin-bottom: 12px;
 }
 
+.confluence-sync-url-input {
+	width: 100%;
+}
+
 .confluence-sync-status-bar {
 	cursor: pointer;
 }

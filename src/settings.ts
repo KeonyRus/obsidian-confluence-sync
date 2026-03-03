@@ -1,6 +1,5 @@
 import { App, PluginSettingTab, Setting, Notice } from "obsidian";
 import type ConfluenceSyncPlugin from "./main";
-import type { ConfluenceSyncSettings } from "./types";
 
 export class ConfluenceSyncSettingTab extends PluginSettingTab {
 	plugin: ConfluenceSyncPlugin;
@@ -14,54 +13,57 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 		const { containerEl } = this;
 		containerEl.empty();
 
-		containerEl.createEl("h2", { text: "Confluence Reader Settings" });
+		new Setting(containerEl)
+			.setName("Confluence reader settings")
+			.setHeading();
 
 		new Setting(containerEl)
-			.setName("Confluence Base URL")
+			.setName("Confluence base URL")
 			.setDesc("Base URL of your Confluence instance (e.g., https://confluence.example.com)")
 			.addText((text) =>
 				text
 					.setPlaceholder("https://confluence.example.com")
 					.setValue(this.plugin.settings.baseUrl)
-					.onChange(async (value) => {
+					.onChange((value) => {
 						this.plugin.settings.baseUrl = value.replace(/\/+$/, "");
-						await this.plugin.saveSettings();
+						void this.plugin.saveSettings();
 					}),
 			);
 
 		new Setting(containerEl)
-			.setName("Personal Access Token")
-			.setDesc("Confluence Personal Access Token for authentication")
+			.setName("Personal access token")
+			.setDesc("Confluence personal access token for authentication")
 			.addText((text) => {
 				text.inputEl.type = "password";
 				text
 					.setPlaceholder("Enter your PAT")
 					.setValue(this.plugin.settings.pat)
-					.onChange(async (value) => {
+					.onChange((value) => {
 						this.plugin.settings.pat = value;
-						await this.plugin.saveSettings();
+						void this.plugin.saveSettings();
 					});
 			});
 
 		new Setting(containerEl)
-			.setName("Test Connection")
+			.setName("Test connection")
 			.setDesc("Verify connection to Confluence server")
 			.addButton((btn) =>
-				btn.setButtonText("Test").onClick(async () => {
+				btn.setButtonText("Test").onClick(() => {
 					btn.setDisabled(true);
 					btn.setButtonText("Testing...");
-					try {
-						const result = await this.plugin.client.testConnection();
-						const count = result.results.length;
-						const total = result.size;
-						new Notice(`Connected! Found ${total} space(s).`);
-					} catch (e: unknown) {
-						const msg = e instanceof Error ? e.message : String(e);
-						new Notice(`Connection failed: ${msg}`);
-					} finally {
-						btn.setDisabled(false);
-						btn.setButtonText("Test");
-					}
+					void this.plugin.client.testConnection()
+						.then((result) => {
+							const total = result.size;
+							new Notice(`Connected! Found ${total} space(s).`);
+						})
+						.catch((e: unknown) => {
+							const msg = e instanceof Error ? e.message : String(e);
+							new Notice(`Connection failed: ${msg}`);
+						})
+						.finally(() => {
+							btn.setDisabled(false);
+							btn.setButtonText("Test");
+						});
 				}),
 			);
 
@@ -69,35 +71,35 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 			.setName("Skip SSL verification")
 			.setDesc("Disable TLS certificate verification (for self-signed certificates). Requires restart.")
 			.addToggle((toggle) =>
-				toggle.setValue(this.plugin.settings.skipSsl).onChange(async (value) => {
+				toggle.setValue(this.plugin.settings.skipSsl).onChange((value) => {
 					this.plugin.settings.skipSsl = value;
-					await this.plugin.saveSettings();
+					void this.plugin.saveSettings();
 				}),
 			);
 
 		new Setting(containerEl)
-			.setName("Default Space Key")
+			.setName("Default space key")
 			.setDesc("Default Confluence space key (e.g., DEV, HR, ENG)")
 			.addText((text) =>
 				text
 					.setPlaceholder("MYSPACE")
 					.setValue(this.plugin.settings.defaultSpaceKey)
-					.onChange(async (value) => {
+					.onChange((value) => {
 						this.plugin.settings.defaultSpaceKey = value;
-						await this.plugin.saveSettings();
+						void this.plugin.saveSettings();
 					}),
 			);
 
 		new Setting(containerEl)
-			.setName("Sync Folder Path")
+			.setName("Sync folder path")
 			.setDesc("Folder in vault where Confluence pages will be stored")
 			.addText((text) =>
 				text
 					.setPlaceholder("confluence-pages")
 					.setValue(this.plugin.settings.syncFolder)
-					.onChange(async (value) => {
+					.onChange((value) => {
 						this.plugin.settings.syncFolder = value.replace(/\/+$/, "");
-						await this.plugin.saveSettings();
+						void this.plugin.saveSettings();
 					}),
 			);
 
@@ -105,9 +107,9 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 			.setName("Pull attachments")
 			.setDesc("Download page attachments when pulling pages")
 			.addToggle((toggle) =>
-				toggle.setValue(this.plugin.settings.pullAttachments).onChange(async (value) => {
+				toggle.setValue(this.plugin.settings.pullAttachments).onChange((value) => {
 					this.plugin.settings.pullAttachments = value;
-					await this.plugin.saveSettings();
+					void this.plugin.saveSettings();
 				}),
 			);
 	}

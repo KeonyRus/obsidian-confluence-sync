@@ -60,7 +60,7 @@ export default class ConfluenceSyncPlugin extends Plugin {
 					return false;
 				}
 				if (checking) return true;
-				this.rePullCurrentFile(file);
+				void this.rePullCurrentFile(file);
 				return true;
 			},
 		});
@@ -68,17 +68,17 @@ export default class ConfluenceSyncPlugin extends Plugin {
 		this.addCommand({
 			id: "re-pull-all",
 			name: "Re-pull all synced files",
-			callback: () => this.rePullAll(),
+			callback: () => { void this.rePullAll(); },
 		});
 
 		this.addCommand({
 			id: "browse-spaces",
 			name: "Browse spaces",
-			callback: () => this.browseSpaces(),
+			callback: () => { void this.browseSpaces(); },
 		});
 
 		// Ribbon icon
-		this.addRibbonIcon("cloud-download", "Confluence: Pull page", () => {
+		this.addRibbonIcon("cloud-download", "Confluence: pull page", () => {
 			new PullModal(this.app, this.pullEngine, "page").open();
 		});
 	}

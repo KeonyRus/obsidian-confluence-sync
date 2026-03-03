@@ -18,7 +18,7 @@ export class PullModal extends Modal {
 		contentEl.addClass("confluence-sync-pull-modal");
 
 		contentEl.createEl("h3", {
-			text: this.mode === "tree" ? "Pull Page Tree" : "Pull Page",
+			text: this.mode === "tree" ? "Pull page tree" : "Pull page",
 		});
 
 		new Setting(contentEl)
@@ -26,7 +26,7 @@ export class PullModal extends Modal {
 			.setDesc("Confluence page URL, page ID, or page title")
 			.addText((text) => {
 				text.setPlaceholder("https://confluence.example.com/pages/viewpage.action?pageId=12345");
-				text.inputEl.style.width = "100%";
+				text.inputEl.addClass("confluence-sync-url-input");
 				text.onChange((value) => {
 					this.input = value;
 				});
@@ -34,7 +34,7 @@ export class PullModal extends Modal {
 				text.inputEl.addEventListener("keydown", (e) => {
 					if (e.key === "Enter") {
 						e.preventDefault();
-						this.executePull();
+						void this.executePull();
 					}
 				});
 			});
@@ -58,7 +58,7 @@ export class PullModal extends Modal {
 		new Setting(contentEl).addButton((btn) => {
 			btn.setButtonText("Pull")
 				.setCta()
-				.onClick(() => this.executePull());
+				.onClick(() => { void this.executePull(); });
 		});
 	}
 
