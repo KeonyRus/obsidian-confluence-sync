@@ -106,18 +106,18 @@ export default class ConfluenceSyncPlugin extends Plugin {
 
 	private async rePullCurrentFile(file: TFile): Promise<void> {
 		try {
-			new Notice("Re-pulling from Confluence...");
+			new Notice("Re-pulling...");
 			const status = await this.pullEngine.rePullFile(file);
 			switch (status) {
 				case "updated":
-					new Notice("File updated from Confluence.");
+					new Notice("File updated.");
 					this.statusBar.setLastPullTime(new Date());
 					break;
 				case "skipped":
 					new Notice("File is already up to date.");
 					break;
 				case "not-synced":
-					new Notice("This file is not synced from Confluence.");
+					new Notice("This file is not synced.");
 					break;
 			}
 		} catch (e: unknown) {

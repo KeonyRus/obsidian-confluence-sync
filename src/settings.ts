@@ -14,10 +14,6 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName("Confluence reader settings")
-			.setHeading();
-
-		new Setting(containerEl)
 			.setName("Confluence base URL")
 			.setDesc("Base URL of your Confluence instance (e.g., https://confluence.example.com)")
 			.addText((text) =>
@@ -36,7 +32,7 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 			.addText((text) => {
 				text.inputEl.type = "password";
 				text
-					.setPlaceholder("Enter your PAT")
+					.setPlaceholder("Enter your token")
 					.setValue(this.plugin.settings.pat)
 					.onChange((value) => {
 						this.plugin.settings.pat = value;
@@ -46,7 +42,7 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Test connection")
-			.setDesc("Verify connection to Confluence server")
+			.setDesc("Verify connection to server")
 			.addButton((btn) =>
 				btn.setButtonText("Test").onClick(() => {
 					btn.setDisabled(true);
@@ -79,7 +75,7 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Default space key")
-			.setDesc("Default Confluence space key (e.g., DEV, HR, ENG)")
+			.setDesc("Space key used when searching by title")
 			.addText((text) =>
 				text
 					.setPlaceholder("MYSPACE")
@@ -92,10 +88,9 @@ export class ConfluenceSyncSettingTab extends PluginSettingTab {
 
 		new Setting(containerEl)
 			.setName("Sync folder path")
-			.setDesc("Folder in vault where Confluence pages will be stored")
+			.setDesc("Folder in vault where synced pages will be stored")
 			.addText((text) =>
 				text
-					.setPlaceholder("confluence-pages")
 					.setValue(this.plugin.settings.syncFolder)
 					.onChange((value) => {
 						this.plugin.settings.syncFolder = value.replace(/\/+$/, "");

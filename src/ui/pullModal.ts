@@ -103,7 +103,7 @@ export class PullModal extends Modal {
 						new Notice("Page pulled successfully!");
 						break;
 					case "updated":
-						new Notice("Page updated from Confluence.");
+						new Notice("Page updated.");
 						break;
 					case "skipped":
 						new Notice("Page is already up to date.");
